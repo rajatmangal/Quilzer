@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question.dart';
+import 'questionBrain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -27,12 +28,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  static Question q1 = Question(question: 'You can lead a cow down stairs but not up stairs.', answer:false);
-  static Question q2 = Question(question: 'Approximately one quarter of human bones are in the feet.', answer:true);
-  static Question q3 = Question(question: 'A slug\'s blood is green.', answer:true);
-  List<Question> questions=[
-    q1,q2,q3
-  ];
+  List<Question> questions= QuestionBrain().questions;
+
   List<Icon> scoreKeeper = [];
   void showResult(IconData icon,Color color) {
     scoreKeeper.add(Icon(
@@ -122,9 +119,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
