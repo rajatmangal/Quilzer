@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -19,12 +20,19 @@ class Quizzler extends StatelessWidget {
   }
 }
 
+
 class QuizPage extends StatefulWidget {
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
+  static Question q1 = Question(question: 'You can lead a cow down stairs but not up stairs.', answer:false);
+  static Question q2 = Question(question: 'Approximately one quarter of human bones are in the feet.', answer:true);
+  static Question q3 = Question(question: 'A slug\'s blood is green.', answer:true);
+  List<Question> questions=[
+    q1,q2,q3
+  ];
   List<Icon> scoreKeeper = [];
   void showResult(IconData icon,Color color) {
     scoreKeeper.add(Icon(
@@ -32,6 +40,7 @@ class _QuizPageState extends State<QuizPage> {
       color: color,
     ));
   }
+  var currentQuestion = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +53,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[currentQuestion].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -69,7 +78,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  showResult(Icons.check,Colors.green);
+                  if(questions[currentQuestion].questionAnswer) {
+                    showResult(Icons.check,Colors.green);
+                  } else {
+                    showResult(Icons.close,Colors.red);
+                  }
+                  currentQuestion++;
                 });
               },
             ),
@@ -89,7 +103,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  showResult(Icons.close,Colors.red);
+                  if(!questions[currentQuestion].questionAnswer) {
+                    showResult(Icons.check,Colors.green);
+                  } else {
+                    showResult(Icons.close,Colors.red);
+                  }
+                  currentQuestion++;
                 });
 
               },
