@@ -25,6 +25,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [];
+  void showResult(IconData icon,Color color) {
+    scoreKeeper.add(Icon(
+      icon,
+      color: color,
+    ));
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,7 +68,9 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
+                setState(() {
+                  showResult(Icons.check,Colors.green);
+                });
               },
             ),
           ),
@@ -79,12 +88,17 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                setState(() {
+                  showResult(Icons.close,Colors.red);
+                });
+
               },
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
+        Row(
+          children: scoreKeeper,
+        )
       ],
     );
   }
