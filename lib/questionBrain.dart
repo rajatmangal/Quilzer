@@ -36,6 +36,13 @@ class QuestionBrain {
     }
   }
 
+  bool checkQuestion() {
+    if(_currentQuestion == _questions.length-1) {
+      return true;
+    }
+    return false;
+  }
+
   String getQuestion() {
     return _questions[_currentQuestion].questionText;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'questionBrain.dart';
+import 'package:rflutter_alert/src/alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -36,6 +37,24 @@ class _QuizPageState extends State<QuizPage> {
       color: color,
     ));
   }
+
+  void checkAnswer(bool answer) {
+    if(questions.checkQuestion()) {
+      Alert(context: context, title: "Finished", desc: "You have reached the end of the quiz.").show();
+    }
+    else {
+      setState(() {
+        if(questions.getAnswer() == answer) {
+          showResult(Icons.check,Colors.green);
+        }
+        else {
+          showResult(Icons.close,Colors.red);
+        }
+        questions.nextQuestion();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,14 +91,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if(questions.getAnswer()) {
-                    showResult(Icons.check,Colors.green);
-                  } else {
-                    showResult(Icons.close, Colors.red);
-                  }
-                  questions.nextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -97,15 +109,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if(!questions.getAnswer()) {
-                    showResult(Icons.check,Colors.green);
-                  } else {
-                    showResult(Icons.close,Colors.red);
-                  }
-                  questions.nextQuestion();
-                });
-
+                checkAnswer(false);
               },
             ),
           ),
